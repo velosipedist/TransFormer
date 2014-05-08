@@ -1,0 +1,29 @@
+{
+    "directories": [
+			"vendor/composer",
+			"vendor/slim/slim/Slim",
+			"vendor/anahkiasen/former/src",
+			"vendor/anahkiasen/html-object/src",
+			"vendor/illuminate/container",
+			"vendor/illuminate/support",
+			"vendor/illuminate/validation",
+			"vendor/illuminate/translation",
+			"vendor/illuminate/filesystem",
+			"vendor/illuminate/config",
+			"vendor/illuminate/http",
+
+			"vendor/illuminate/cache",
+			"vendor/illuminate/cookie",
+			"vendor/illuminate/encryption",
+			"vendor/illuminate/routing",
+			"vendor/illuminate/session",
+
+			"vendor/symfony",
+			"lib"
+		],
+    "files": ["vendor/autoload.php"],
+    "main": "src/init.php",
+    "output": "former.phar",
+    "blacklist": [],
+    "stub": true
+}

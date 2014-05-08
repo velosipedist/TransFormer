@@ -1,0 +1,22 @@
+{
+	"require": {
+		"illuminate/config": "4.1.*",
+		"illuminate/container": "4.1.*",
+		"illuminate/http": "4.1.*",
+		"illuminate/routing": "4.1.*",
+		"illuminate/session": "4.1.*",
+		"illuminate/translation": "4.1.*",
+		"illuminate/validation": "4.1.*",
+		"anahkiasen/former": "dev-master",
+		"slim/slim": "2.4.*"
+	},
+	"require-dev": {
+		"illuminate/database": "4.1.*",
+		"phing/phing": "2.6.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"TransFormer\\": "src/"
+		}
+	}
+}
