@@ -7,25 +7,26 @@ namespace TransFormer;
  */
 class TransFormer
 {
+	const FORMS_ROOT = 'formsRoot';
+	const TEMPLATES_ROOT = 'templatesRoot';
 	const LOCALE = 'locale';
 	const TRANSLATIONS_PATH = 'translationsPath';
+	const AJAX_URL = 'ajaxUrl';
 
 	/** @var Manager */
 	private static $manager;
 
-
 	/**
 	 * Instantiate forms Manager and save to session. Use it on main site frontend.
-	 * @param string $formsRoot
-	 * @param string $templatesRoot
-	 * @param string $ajaxUrl
-	 * @param array  $options
+	 * @param array $options
 	 * @return Manager
 	 */
-	public static function instance($formsRoot, $templatesRoot, $ajaxUrl, $options = array()) {
+	public static function instance($options = array()) {
 		if (is_null(self::$manager)) {
-			self::$manager                       = new Manager($formsRoot, $templatesRoot, $ajaxUrl, $options);
+			self::$manager                       = new Manager($options);
 			$_SESSION['TransFormer\TransFormer'] = self::$manager;
+		} else {
+			self::$manager->setOptions($options);
 		}
 		return self::$manager;
 	}
@@ -46,12 +47,12 @@ class TransFormer
 	}
 
 	/**
-	 * @param $formName
-	 * @return mixed
+	 * @param        $formName
+	 * @param string $template
 	 */
 	public static function render($formName, $template = 'default') {
 		self::ensureManager();
-		return self::$manager->render($formName, $template);
+		self::$manager->render($formName, $template);
 	}
 
 	/**
@@ -63,4 +64,3 @@ class TransFormer
 		}
 	}
 }
- 

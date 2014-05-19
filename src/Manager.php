@@ -8,7 +8,7 @@ use Former\Traits\Field;
 use Illuminate\Container\Container;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
-use TransFormer\Validator;
+use Illuminate\Validation\Factory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -32,17 +32,10 @@ class Manager
 	private $translationsPath = __DIR__;
 
 	/**
-	 * @param $formsRoot
-	 * @param $templatesRoot
-	 * @param $ajaxUrl
+	 * @param array $options
 	 */
-	public function __construct($formsRoot, $templatesRoot, $ajaxUrl, $options = array()) {
-		$this->ajaxUrl       = $ajaxUrl;
-		$this->formsRoot     = $formsRoot;
-		$this->templatesRoot = $templatesRoot;
-		foreach ($options as $option => $val) {
-			$this->{$option} = $val;
-		}
+	public function __construct($options = array()) {
+		$this->setOptions($options);
 
 		$this->bootstrapFormer();
 	}
@@ -77,7 +70,12 @@ class Manager
 		foreach ($rules as $rule=>$config) {
 			$attributes = Parsley::ruleToAttributes($field, $rule, $config);
 			$field->setAttributes($attributes);
-			$message = $validator->getRuleMessage($field->getName(), $rule);
+			if($field->getAttribute('error-message')){
+				$message = $field->getAttribute('error-message');
+				$field->removeAttribute('error-message');
+			} else {
+				$message = $validator->getRuleMessage($field->getName(), $rule, $config);
+			}
 			$field->setAttribute('data-parsley-error-message', $message);
 		}
 	}
@@ -116,11 +114,17 @@ class Manager
 	 * @param array $data
 	 * @return Validator
 	 */
-	private function validator(array $rules, array $data) {
+	public function validator(array $rules, array $data) {
 		/** @var $translator Translator */
 		$translator = $this->container['translator'];
 		$translator->setLocale($this->locale);
-		return new Validator($translator, $data, $rules);
+		$factory = new Factory($translator, $this->container);
+		$container = $this->container;
+		$factory->resolver(function($translator, $data, $rules, $messages, $customAttributes)
+			use ($container) {
+				return new Validator($translator, $data, $rules, $messages, $customAttributes);
+		});
+		return $factory->make($data, $rules);
 	}
 
 	private function listenInputsRendering() {
@@ -145,6 +149,15 @@ class Manager
 				return new Translator($fileLoader, $this->locale);
 			}
 		);
+	}
+
+	/**
+	 * @param $options
+	 */
+	public function setOptions($options) {
+		foreach ($options as $option => $val) {
+			$this->{$option} = $val;
+		}
 	}
 }
  

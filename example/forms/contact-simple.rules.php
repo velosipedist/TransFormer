@@ -1,5 +1,5 @@
 <?
 return array(
-	'name'=>'required',
-	'bar'=>'required|min:2',
+	'name'=>'required|email',
+	'bar'=>'required|min.array:2',
 );

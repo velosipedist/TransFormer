@@ -1,10 +1,12 @@
 <?
-error_reporting(E_ALL);ini_set('display_errors',1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 require __DIR__ . "/../src/init.php";
 $manager = \TransFormer\TransFormer::instance(
-	__DIR__ . '/forms',
-	__DIR__ . '/tpl',
-	'/_transformer'
+	array(
+		\TransFormer\TransFormer::FORMS_ROOT => __DIR__ . '/forms',
+		\TransFormer\TransFormer::TEMPLATES_ROOT => __DIR__ . '/tpl'
+	)
 );
 
 ?>
@@ -14,15 +16,15 @@ $manager = \TransFormer\TransFormer::instance(
 	<meta charset="UTF-8">
 	<title>Former + Parsley example</title>
 	<link rel="stylesheet" type="text/css"
-	      href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+	      href="/css/bootstrap.min.css"/>
 	<style type="text/css">
 		.parsley-errors-list {
 			display: none;
 		}
 	</style>
-	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="//parsleyjs.org/dist/parsley.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/parsley.min.js"></script>
 </head>
 <body>
 <div class="navbar">
