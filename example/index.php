@@ -1,14 +1,23 @@
 <?
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
-require __DIR__ . "/../src/init.php";
-$manager = \TransFormer\TransFormer::instance(
-	array(
-		\TransFormer\TransFormer::FORMS_ROOT => __DIR__ . '/forms',
-		\TransFormer\TransFormer::TEMPLATES_ROOT => __DIR__ . '/tpl'
-	)
+require __DIR__ . "/../main.php";
+$manager = \TransFormer\TransFormer::instance(array(
+	\TransFormer\TransFormer::FORMS_ROOT => __DIR__ . '/forms',
+));
+$rules = array(
+	'name' => 'required|email',
+	'bar' => 'required|min:2',
 );
-
+if (isset($_POST['name'])) {
+	$validator = \TransFormer\TransFormer::instance()->validator(
+		$rules,
+		array_intersect_key($_POST, array('name' => '', 'bar' => ''))
+	);
+	if (!$validator->fails()) {
+		print "<p>Data is valid. Uo can <a href='/'>go back</a>.";
+	} else {
+		var_dump($validator->errors()->toArray());
+	}
+}
 ?>
 <!doctype html>
 <html lang="en-US">
@@ -16,7 +25,7 @@ $manager = \TransFormer\TransFormer::instance(
 	<meta charset="UTF-8">
 	<title>Former + Parsley example</title>
 	<link rel="stylesheet" type="text/css"
-	      href="/css/bootstrap.min.css"/>
+		  href="/css/bootstrap.min.css"/>
 	<style type="text/css">
 		.parsley-errors-list {
 			display: none;
@@ -34,7 +43,7 @@ $manager = \TransFormer\TransFormer::instance(
 	<div class="row">
 		<div class="col-lg-8">
 			<?
-			\TransFormer\TransFormer::render('contact-simple');
+			\TransFormer\TransFormer::render('contact-simple', $rules);
 			?>
 		</div>
 	</div>

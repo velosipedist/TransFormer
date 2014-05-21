@@ -8,7 +8,6 @@ namespace TransFormer;
 class TransFormer
 {
 	const FORMS_ROOT = 'formsRoot';
-	const TEMPLATES_ROOT = 'templatesRoot';
 	const LOCALE = 'locale';
 	const TRANSLATIONS_PATH = 'translationsPath';
 	const AJAX_URL = 'ajaxUrl';
@@ -23,7 +22,7 @@ class TransFormer
 	 */
 	public static function instance($options = array()) {
 		if (is_null(self::$manager)) {
-			self::$manager                       = new Manager($options);
+			self::$manager = new Manager($options);
 			$_SESSION['TransFormer\TransFormer'] = self::$manager;
 		} else {
 			self::$manager->setOptions($options);
@@ -47,12 +46,12 @@ class TransFormer
 	}
 
 	/**
-	 * @param        $formName
-	 * @param string $template
+	 * @param string $formName
+	 * @param array $rules
 	 */
-	public static function render($formName, $template = 'default') {
+	public static function render($formName, array $rules) {
 		self::ensureManager();
-		self::$manager->render($formName, $template);
+		self::$manager->render($formName, $rules);
 	}
 
 	/**

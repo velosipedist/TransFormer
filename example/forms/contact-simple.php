@@ -7,19 +7,8 @@
  */
 use TransFormer\facade\Former as F;
 
-/*$config = array(
-	'form' => ['action' => '', 'method' => 'get', 'secure' => true],
-	'inputs' => [
-		'name' => ['type'=>'text','id' => 'nameId', 'rules' => 'required'],
-		'comments' => ['type'=>'textarea','id' => 'commId', 'rules' => 'required'],
-		'agree' => ['type'=>'checkboxes', 'rules' => 'required|min:2', ],
-	],
-	'buttons'=>[
-		'submit'=>['type'=>'submit'],
-	]
-);*/
 /** @var $form \Former\Form\Form */
-print F::open_vertical('', 'GET', array(), true)
+print F::open_vertical('', 'post', array(), true)
        ->id('MyForm')
        ->rules($validator->getRules());
 print F::text('name')

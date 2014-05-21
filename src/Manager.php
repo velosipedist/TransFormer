@@ -1,7 +1,6 @@
 <?php
 namespace TransFormer;
 
-use Former\Facades\Former as F;
 use Former\Form\Form;
 use Former\Former as Former;
 use Former\Traits\Field;
@@ -10,6 +9,7 @@ use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
 use Symfony\Component\HttpFoundation\Request;
+use TransFormer\facade\Former as F;
 
 /**
  * Class Manager
@@ -25,8 +25,6 @@ class Manager
 	private $container;
 	/** @var  Former */
 	private $former;
-	/** @var */
-	private $templatesRoot;
 
 	private $locale = 'ru';
 	private $translationsPath = __DIR__;
@@ -74,7 +72,7 @@ class Manager
 				$message = $field->getAttribute('error-message');
 				$field->removeAttribute('error-message');
 			} else {
-				$message = $validator->getRuleMessage($field->getName(), $rule, $config);
+				$message = $validator->getRuleMessage($field, $rule, $config);
 			}
 			$field->setAttribute('data-parsley-error-message', $message);
 		}
@@ -82,9 +80,9 @@ class Manager
 
 	/**
 	 * @param $formName
+	 * @param array $rules
 	 */
-	public function render($formName) {
-		$rules     = $this->findRules($formName);
+	public function render($formName, array $rules) {
 		$data      = $this->fetchData($formName);
 		$validator = $this->validator($rules, $data);
 		$this->container->instance('validator', $validator);
@@ -96,7 +94,11 @@ class Manager
 	 * @return array
 	 */
 	private function findRules($formName) {
-		return (array) require $this->formsRoot . "/{$formName}.rules.php";
+		$rulesFile = $this->formsRoot . "/{$formName}.rules.php";
+		if(!file_exists($rulesFile)) {
+			throw new \InvalidArgumentException("No rules file ".basename($rulesFile));
+		}
+		return (array) require $rulesFile;
 	}
 
 	/**

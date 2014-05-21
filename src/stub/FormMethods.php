@@ -5,6 +5,11 @@ namespace TransFormer\stub;
  */
 class FormMethods extends HtmlMethods{
 	/**
+	 * @param string $name CSS framework name: TwitterBootstrap(3)|ZurbFoundation(4)
+	 */
+	public static function framework($name) {}
+
+	/**
 	 * @param $data Eloquent|array
 	 * @return static
 	 */
