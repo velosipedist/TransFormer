@@ -1,21 +1,19 @@
 <?
 require __DIR__ . "/../main.php";
-$manager = \TransFormer\TransFormer::instance(array(
-	\TransFormer\TransFormer::FORMS_ROOT => __DIR__ . '/forms',
+TransFormer::setup(array(
+	TransFormer::FORMS_ROOT => __DIR__ . '/forms',
 ));
 $rules = array(
 	'name' => 'required|email',
 	'bar' => 'required|min:2',
 );
+TransFormer::registerForm('contact-simple', $rules);
 if (isset($_POST['name'])) {
-	$validator = \TransFormer\TransFormer::instance()->validator(
-		$rules,
-		array_intersect_key($_POST, array('name' => '', 'bar' => ''))
-	);
-	if (!$validator->fails()) {
-		print "<p>Data is valid. Uo can <a href='/'>go back</a>.";
+	$data = array_intersect_key($_POST, array('name' => '', 'bar' => ''));
+	if (!TransFormer::validate($data)) {
+		print "<p>Data is valid. You can <a href='/'>go back</a>.";
 	} else {
-		var_dump($validator->errors()->toArray());
+		var_dump(TransFormer::errors());
 	}
 }
 ?>
@@ -43,7 +41,7 @@ if (isset($_POST['name'])) {
 	<div class="row">
 		<div class="col-lg-8">
 			<?
-			\TransFormer\TransFormer::render('contact-simple', $rules);
+			TransFormer::render('contact-simple');
 			?>
 		</div>
 	</div>
@@ -76,9 +74,6 @@ if (isset($_POST['name'])) {
 		$(this).tooltip('destroy');
 	});
 
-	$(function () {
-		$('#MyForm').parsley();
-	});
 </script>
 </body>
 </html>

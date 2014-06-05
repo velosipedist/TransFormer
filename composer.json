@@ -17,6 +17,7 @@
 	"autoload": {
 		"psr-4": {
 			"TransFormer\\": "src/"
-		}
+		},
+        "files": ["src/Service.php"]
 	}
 }

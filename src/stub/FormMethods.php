@@ -1,5 +1,8 @@
 <?php
 namespace TransFormer\stub;
+use Illuminate\Support\MessageBag;
+use Illuminate\Validation\Validator;
+
 /**
  * @method static class($class)
  */
@@ -29,7 +32,7 @@ class FormMethods extends HtmlMethods{
 	 * @param $secure
 	 * @return static
 	 */
-	public static function open($action, $method, $attributes, $secure) {}
+	public static function open($action, $method, $attributes = array(), $secure = false) {}
 
 	/**
 	 * @param $action
@@ -38,7 +41,7 @@ class FormMethods extends HtmlMethods{
 	 * @param $secure
 	 * @return static
 	 */
-	public static function open_horizontal($action, $method, $attributes, $secure) {}
+	public static function open_horizontal($action, $method, $attributes = array(), $secure = false) {}
 
 	/**
 	 * @param $action
@@ -47,7 +50,12 @@ class FormMethods extends HtmlMethods{
 	 * @param $secure
 	 * @return static
 	 */
-	public static function open_vertical($action, $method, $attributes, $secure) {}
+	public static function open_vertical($action, $method, $attributes = array(), $secure = false) {}
+
+	/**
+	 * @return string
+	 */
+	public static function close() {}
 
 	/**
 	 * @param $id
@@ -95,45 +103,71 @@ class FormMethods extends HtmlMethods{
 	 * @param $name
 	 * @return FieldMethods
 	 */
-	public static function text($name) {}
+	public static function hidden($name) { }
+
 	/**
 	 * @param $name
 	 * @return FieldMethods
 	 */
-	public static function textarea($name) {}
+	public static function text($name, $label = null, $value = null, $attributes = array()) {}
 	/**
 	 * @param $name
 	 * @return FieldMethods
 	 */
-	public static function checkbox($name) {}
+	public static function textarea($name, $label = null, $value = null, $attributes = array()) {}
 	/**
 	 * @param $name
 	 * @return FieldMethods
 	 */
-	public static function checkboxes($name) {}
+	public static function email($name, $label = null, $value = null, $attributes = array()) {}
 	/**
 	 * @param $name
 	 * @return FieldMethods
 	 */
-	public static function radio($name) {}
+	public static function password($name, $label = null, $value = null, $attributes = array()) {}
 	/**
 	 * @param $name
 	 * @return FieldMethods
 	 */
-	public static function select($name) {}
+	public static function checkbox($name, $label = null, $value = null, $attributes = array()) {}
 	/**
 	 * @param $name
 	 * @return FieldMethods
 	 */
-	public static function file($name) {}
+	public static function checkboxes($name, $label = null, $value = null, $attributes = array()) {}
 	/**
 	 * @param $name
 	 * @return FieldMethods
 	 */
-	public static function files($name) {}
+	public static function radio($name, $label = null, $value = null, $attributes = array()) {}
+	/**
+	 * @param $name
+	 * @return FieldMethods
+	 */
+	public static function radios($name, $label = null, $value = null, $attributes = array()) {}
+	/**
+	 * @param $name
+	 * @return FieldMethods
+	 */
+	public static function select($name, $label = null, $value = null, $attributes = array()) {}
+	/**
+	 * @param $name
+	 * @return FieldMethods
+	 */
+	public static function file($name, $label = null, $value = null, $attributes = array()) {}
+	/**
+	 * @param $name
+	 * @return FieldMethods
+	 */
+	public static function files($name, $label = null, $value = null, $attributes = array()) {}
 	/**
 	 * @return ActionsMethods
 	 */
 	public static function actions() {}
+
+	/**
+	 * @param Validator|MessageBag $errors
+	 */
+	public static function withErrors($errors) {}
 }
  

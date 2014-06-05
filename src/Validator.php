@@ -32,7 +32,7 @@ class Validator extends \Illuminate\Validation\Validator{
 		if($field->isOfType('file')){
 			return 'file';
 		}
-		if($field->isOfType('text', 'email', 'phone')){
+		if($field->isOfType('text', 'email', 'phone','password')){
 			return 'string';
 		}
 		return 'string';

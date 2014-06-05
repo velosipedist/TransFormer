@@ -3,6 +3,21 @@ namespace TransFormer\stub;
 //todo extract separate stubs for radio, select, files etc
 class FieldMethods extends HtmlMethods{
 	/**
+	 * @param $name
+	 * @return static
+	 */
+	public static function name($name) { }
+	/**
+	 * @param $value
+	 * @return static
+	 */
+	public static function value($value) {}
+	/**
+	 * @param $value
+	 * @return static
+	 */
+	public static function forceValue($value) {}
+	/**
 	 * @param $placeholder
 	 * @return static
 	 */
@@ -112,6 +127,27 @@ class FieldMethods extends HtmlMethods{
 	 * @return static
 	 */
 	public static function useDatalist($data, $key = null) {}
+
+	/**
+	 * @param array $data
+	 * @param string $key
+	 * @return static
+	 */
+	public static function append($content) {}
+
+	/**
+	 * @param array $data
+	 * @param string $key
+	 * @return static
+	 */
+	public static function prepend($content) {}
+
+	/**
+	 * @param $onOrOff
+	 * @return static
+	 */
+	public function autocomplete($onOrOff) { }
+
 
 }
  
