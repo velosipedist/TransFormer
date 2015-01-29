@@ -51,7 +51,7 @@ namespace TransFormer {
 		 * @param array $rules
 		 * @param array $labels
 		 */
-		public static function registerForm($formName, array $rules, $labels = array()) {
+		public static function registerForm($formName, array $rules, array $labels = array()) {
 			self::$manager->registerForm($formName, $rules, $labels);
 		}
 
@@ -136,6 +136,11 @@ namespace TransFormer {
 				return self::$errors[$errKey];
 			}
 			return array();
+		}
+
+		public static function selectForm($formName) {
+			self::ensureManager();
+			self::$manager->selectForm($formName);
 		}
 	}
 }

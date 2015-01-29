@@ -5,4 +5,6 @@ use TransFormer\stub\FormMethods;
 /**
  * @mixin FormMethods
  */
-class Former extends \Former\Facades\Former {}
+class Former extends \Former\Facades\Former {
+
+}

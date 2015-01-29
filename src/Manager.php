@@ -121,7 +121,7 @@ class Manager
 	 * @param $labels
 	 * @return $this
 	 */
-	public function registerForm($formName, $rules, $labels) {
+	public function registerForm($formName, array $rules, array $labels = array()) {
 		$validator = null;
 		$this->formsOptions[$formName] = array(
 			'rules'=>$rules,
@@ -242,7 +242,7 @@ class Manager
 		$this->container->bind('translator',
 			function ($cont) use ($me) {
 				$fileLoader = new FileLoader($cont['files'], __DIR__ . '/../lang');
-				return new Translator($fileLoader, $this->locale);
+				return new Translator($fileLoader, $me->getLocale());
 			}
 		);
 	}
@@ -263,7 +263,7 @@ class Manager
 	 * Triggers hook for opening every Former Form
 	 * @param Form $form
 	 */
-	private function onFormOpened(Form $form) {
+	public function onFormOpened(Form $form) {
 		$this->lastFormId = ($id = $form->getAttribute('id')) ? $id : null;
 		if($handler = $this->hooks['onFormOpened']){
 			call_user_func_array($handler, array($form));
@@ -293,6 +293,13 @@ class Manager
 			$data = $this->formsData[$formName];
 		}
 		return $data;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLocale() {
+		return $this->locale;
 	}
 }
  
